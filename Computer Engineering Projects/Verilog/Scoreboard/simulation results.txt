@@ -1,0 +1,159 @@
+Digital Scoreboard Fall 2016
+Simulation Transcript
+-------------------------------
+
+# Loading work.Scoreboard_tb
+# Loading work.Scoreboard
+# Loading work.clk_divider
+# Loading work.input_logic
+# Loading work.bcd_counter_2digit
+# Loading work.sseg_encoder
+run -all
+# Perform Global Reset
+#                  100	sys reset = 1	incr = 0	decr = 0	clr = 0		score(BCD) = 00	score(7seg) = 00
+
+# Increment the score 10 times, score should be 10
+#                  655	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 01	score(7seg) = 01
+#                 1135	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 02	score(7seg) = 02
+#                 1495	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 03	score(7seg) = 03
+#                 2035	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 04	score(7seg) = 04
+#                 2575	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 05	score(7seg) = 05
+#                 3295	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 06	score(7seg) = 06
+#                 4075	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 07	score(7seg) = 07
+#                 4975	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 08	score(7seg) = 08
+#                 5935	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 09	score(7seg) = 09
+#                 7075	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 10	score(7seg) = 10
+
+# Decrement the score 8 times, score should be 02
+#                 8215	sys reset = 0	incr = 0	decr = 1	clr = 0		score(BCD) = 09	score(7seg) = 09
+#                 9535	sys reset = 0	incr = 0	decr = 1	clr = 0		score(BCD) = 08	score(7seg) = 08
+#                11635	sys reset = 0	incr = 0	decr = 1	clr = 0		score(BCD) = 07	score(7seg) = 07
+#                14515	sys reset = 0	incr = 0	decr = 1	clr = 0		score(BCD) = 06	score(7seg) = 06
+#                18175	sys reset = 0	incr = 0	decr = 1	clr = 0		score(BCD) = 05	score(7seg) = 05
+#                22675	sys reset = 0	incr = 0	decr = 1	clr = 0		score(BCD) = 04	score(7seg) = 04
+#                27955	sys reset = 0	incr = 0	decr = 1	clr = 0		score(BCD) = 03	score(7seg) = 03
+#                34075	sys reset = 0	incr = 0	decr = 1	clr = 0		score(BCD) = 02	score(7seg) = 02
+
+# Increment the score 3 times, score should be 05
+#                34555	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 03	score(7seg) = 03
+#                34855	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 04	score(7seg) = 04
+#                35155	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 05	score(7seg) = 05
+
+# Decrement the score 10 times score should be held to 00
+#                35815	sys reset = 0	incr = 0	decr = 1	clr = 0		score(BCD) = 04	score(7seg) = 04
+#                36415	sys reset = 0	incr = 0	decr = 1	clr = 0		score(BCD) = 03	score(7seg) = 03
+#                37015	sys reset = 0	incr = 0	decr = 1	clr = 0		score(BCD) = 02	score(7seg) = 02
+#                37615	sys reset = 0	incr = 0	decr = 1	clr = 0		score(BCD) = 01	score(7seg) = 01
+#                38215	sys reset = 0	incr = 0	decr = 1	clr = 0		score(BCD) = 00	score(7seg) = 00
+NOTE:  There are extra decrement pulses in the list of vectors that show that the counter holds at 00
+
+# Increment the score 110 times.  score should be held at 99
+#                41755	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 01	score(7seg) = 01
+#                42055	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 02	score(7seg) = 02
+#                42295	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 03	score(7seg) = 03
+#                42595	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 04	score(7seg) = 04
+#                42895	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 05	score(7seg) = 05
+#                43195	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 06	score(7seg) = 06
+#                43495	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 07	score(7seg) = 07
+#                43795	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 08	score(7seg) = 08
+#                44035	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 09	score(7seg) = 09
+#                44335	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 10	score(7seg) = 10
+#                44635	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 11	score(7seg) = 11
+#                44935	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 12	score(7seg) = 12
+#                45235	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 13	score(7seg) = 13
+#                45535	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 14	score(7seg) = 14
+#                45775	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 15	score(7seg) = 15
+#                46075	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 16	score(7seg) = 16
+#                46375	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 17	score(7seg) = 17
+#                46675	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 18	score(7seg) = 18
+#                46975	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 19	score(7seg) = 19
+#                47275	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 20	score(7seg) = 20
+#                47515	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 21	score(7seg) = 21
+#                47815	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 22	score(7seg) = 22
+#                48115	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 23	score(7seg) = 23
+#                48415	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 24	score(7seg) = 24
+#                48715	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 25	score(7seg) = 25
+#                49015	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 26	score(7seg) = 26
+#                49255	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 27	score(7seg) = 27
+#                49555	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 28	score(7seg) = 28
+#                49855	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 29	score(7seg) = 29
+#                50155	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 30	score(7seg) = 30
+#                50455	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 31	score(7seg) = 31
+#                50755	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 32	score(7seg) = 32
+#                50995	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 33	score(7seg) = 33
+#                51295	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 34	score(7seg) = 34
+#                51595	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 35	score(7seg) = 35
+#                51895	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 36	score(7seg) = 36
+#                52195	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 37	score(7seg) = 37
+#                52495	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 38	score(7seg) = 38
+#                52735	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 39	score(7seg) = 39
+#                53035	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 40	score(7seg) = 40
+#                53335	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 41	score(7seg) = 41
+#                53635	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 42	score(7seg) = 42
+#                53935	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 43	score(7seg) = 43
+#                54235	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 44	score(7seg) = 44
+#                54475	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 45	score(7seg) = 45
+#                54775	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 46	score(7seg) = 46
+#                55075	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 47	score(7seg) = 47
+#                55375	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 48	score(7seg) = 48
+#                55675	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 49	score(7seg) = 49
+#                55975	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 50	score(7seg) = 50
+#                56215	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 51	score(7seg) = 51
+#                56515	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 52	score(7seg) = 52
+#                56815	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 53	score(7seg) = 53
+#                57115	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 54	score(7seg) = 54
+#                57415	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 55	score(7seg) = 55
+#                57715	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 56	score(7seg) = 56
+#                57955	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 57	score(7seg) = 57
+#                58255	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 58	score(7seg) = 58
+#                58555	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 59	score(7seg) = 59
+#                58855	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 60	score(7seg) = 60
+#                59155	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 61	score(7seg) = 61
+#                59455	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 62	score(7seg) = 62
+#                59695	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 63	score(7seg) = 63
+#                59995	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 64	score(7seg) = 64
+#                60295	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 65	score(7seg) = 65
+#                60595	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 66	score(7seg) = 66
+#                60895	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 67	score(7seg) = 67
+#                61195	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 68	score(7seg) = 68
+#                61435	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 69	score(7seg) = 69
+#                61735	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 70	score(7seg) = 70
+#                62035	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 71	score(7seg) = 71
+#                62335	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 72	score(7seg) = 72
+#                62635	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 73	score(7seg) = 73
+#                62935	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 74	score(7seg) = 74
+#                63175	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 75	score(7seg) = 75
+#                63475	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 76	score(7seg) = 76
+#                63775	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 77	score(7seg) = 77
+#                64075	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 78	score(7seg) = 78
+#                64375	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 79	score(7seg) = 79
+#                64675	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 80	score(7seg) = 80
+#                64915	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 81	score(7seg) = 81
+#                65215	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 82	score(7seg) = 82
+#                65515	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 83	score(7seg) = 83
+#                65815	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 84	score(7seg) = 84
+#                66115	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 85	score(7seg) = 85
+#                66415	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 86	score(7seg) = 86
+#                66655	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 87	score(7seg) = 87
+#                66955	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 88	score(7seg) = 88
+#                67255	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 89	score(7seg) = 89
+#                67555	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 90	score(7seg) = 90
+#                67855	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 91	score(7seg) = 91
+#                68155	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 92	score(7seg) = 92
+#                68395	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 93	score(7seg) = 93
+#                68695	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 94	score(7seg) = 94
+#                68995	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 95	score(7seg) = 95
+#                69295	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 96	score(7seg) = 96
+#                69595	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 97	score(7seg) = 97
+#                69895	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 98	score(7seg) = 98
+#                70135	sys reset = 0	incr = 1	decr = 0	clr = 0		score(BCD) = 99	score(7seg) = 99
+NOTE:  There are extra increment pulses in the list of vectors that show that the counter holds at 99
+
+# Clear the count by pressing the clr button 6 times in a row
+NOTE:  The trace only shows changes on the outputs so you can't see the clear button presses...there are 5 of them
+NOTE:  before the clr signal gets asserted.
+#                79435	sys reset = 0	incr = 0	decr = 0	clr = 1		score(BCD) = 00	score(7seg) = 00
+
+# ** Note: $stop    : C:/Users/rkravitz/Google Drive/_PSUCourseProjects/ECE508_VlogWkshp_Fall16/hw3/hdl/Scoreboard_tb.v(210)
+#    Time: 84315 ns  Iteration: 1  Instance: /Scoreboard_tb
+# Break in Module Scoreboard_tb at C:/Users/rkravitz/Google Drive/_PSUCourseProjects/ECE508_VlogWkshp_Fall16/hw3/hdl/Scoreboard_tb.v line 210
