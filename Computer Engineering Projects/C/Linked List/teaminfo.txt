@@ -1,0 +1,43 @@
+// 2019 MLS Soccer team standings
+// Format:
+// Team_name" Nickname" league conference #wins-#losses-#ties
+//
+// Team name:	String (char[30]) containing the name of the team - '_' for spaces
+// Nickname: 	String (char[5]) containing the nick name of the team
+// League:		int containing 1 for MSL, 2 for NWSL, 3 for USL, 0 for other
+// Conference:	int containing 1 for Eastern, 2 for Western, 3 for NWSL, 0 for other
+// #wins:		int containing the number of games won during the regular season
+// #losses:		int containing the number of games lost during the regular season
+// #draws:		int containing the number of games drawn (ties) during the regular season
+
+New_York_City_FC          NYC  1 1 18-6-10
+Atlanta_United_FC         ATL  1 1 18-12-4
+Philadelphia_Union        PHI  1 1 16-11-7
+Toronto_FC                TOR  1 1 13-10-11
+D._C._United              DC   1 1 13-10-11 
+New_York_Red_Bulls        RBNY 1 1 14-14-6
+New_England_Revolution    NE   1 1 11-11-12
+Chicago_Fire              CHI  1 1 10-12-12
+Montreal_Impact           MTL  1 1 12-17-5
+Columbus_Crew_SC          CLB  1 1 10-16-8
+Orlando_City_FC           ORL  1 1 9-15-10
+FC Cincinnati			  CIN  1 1 6-22-6
+Los_Angeles_Football_Club LA   1 2 21-4-9
+Seattle_Sounders          SEA  1 2 16-10-8
+Real_Salt_Lake            RSL  1 2 16-13-5
+Minnesota_United_FC       MIN  1 2 15-11-8
+LA_Galaxy                 LA   1 2 15-15-3
+Portland_Timbers          POR  1 2 14-13-7
+FC_Dallas                 DAL  1 2 13-12-9
+San_Jose_Earthquakes      SJ   1 2 13-16-5
+Colorado_Rapids           COL  1 2 12-16-6
+Houston_Dynamo            HOU  1 2 12-18-4
+Sporting_Kansas_City      SKC  1 2 10-16-8
+Vancouver_Whitecaps_FC    VAN  1 2 8-16-10
+
+
+
+
+
+
+

@@ -1,0 +1,94 @@
+readTeamInfo: Reading team info file...
+// MLS Soccer team info
+// Format:
+// Team_name" Nickname" league conference #wins-#losses-#ties
+//
+// Team name:   String (char[30]) containing the name of the team - '_' for spaces
+// Nickname:    String (char[5]) containing the nick name of the team
+// League:              int containing 1 for MSL, 2 for NWSL, 3 for USL, 0 for other
+// Conference:  int containing 1 for Eastern, 2 for Western, 3 for NWSL, 0 for other
+// #wins:               int containing the number of games won during the regular season
+// #losses:             int containing the number of games lost during the regular season
+// #draws:              int containing the number of games drawn (ties) during the regular season
+readTeamInfo: Added record 0
+readTeamInfo: Added record 1
+readTeamInfo: Added record 2
+readTeamInfo: Added record 3
+readTeamInfo: Added record 4
+readTeamInfo: Added record 5
+readTeamInfo: Added record 6
+readTeamInfo: Added record 7
+readTeamInfo: Added record 8
+readTeamInfo: Added record 9
+readTeamInfo: Added record 10
+readTeamInfo: Added record 11
+readTeamInfo: Added record 12
+readTeamInfo: Added record 13
+readTeamInfo: Added record 14
+readTeamInfo: Added record 15
+readTeamInfo: Added record 16
+readTeamInfo: Added record 17
+readTeamInfo: Added record 18
+readTeamInfo: Added record 19
+readTeamInfo: Added record 20
+readTeamInfo: Added record 21
+readTeamInfo: Added record 22
+readTeamInfo: Added record 23
+
+
+Western Conference Teams:
+-------------------------
+Los Angeles Football Club      21-4-9
+Seattle Sounders               16-10-8
+Real Salt Lake                 16-13-5
+Minnesota United FC            15-11-8
+LA Galaxy                      15-15-3
+Portland Timbers               14-13-7
+FC Dallas                      13-12-9
+San Jose Earthquakes           13-16-5
+Colorado Rapids                12-16-6
+Houston Dynamo                 12-18-4
+Sporting Kansas City           10-16-8
+Vancouver Whitecaps FC         8-16-10
+
+Eastern Conference Teams:
+-------------------------
+New York City FC               18-6-10
+Atlanta United FC              18-12-4
+Philadelphia Union             16-11-7
+Toronto FC                     13-10-11
+D. C. United                   13-10-11
+New York Red Bulls             14-14-6
+New England Revolution         11-11-12
+Chicago Fire                   10-12-12
+Montreal Impact                12-17-5
+Columbus Crew SC               10-16-8
+Orlando City FC                9-15-10
+FC Cincinnati                  6-22-6
+
+Team with most wins in West:
+----------------------------
+Los Angeles Football Club      21-4-9
+
+Team with most losses in West:
+------------------------------
+Houston Dynamo                 12-18-4
+
+Team with most wins in East:
+----------------------------
+New York City FC               18-6-10
+
+Team with most losses in East:
+------------------------------
+FC Cincinnati                  6-22-6
+
+Top 5 teams:
+------------
+Los Angeles Football Club      21-4-9
+New York City FC               18-6-10
+Philadelphia Union             16-11-7
+Minnesota United FC            15-11-8
+New York Red Bulls             14-14-6
+
+Process returned 0 (0x0)   execution time : 0.430 s
+Press any key to continue.

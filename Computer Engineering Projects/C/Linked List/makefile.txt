@@ -1,0 +1,9 @@
+main: main.o teamInfo.o LinkedList.o
+	gcc -o main main.o teamInfo.o LinkedList.o
+main.o: main.c teamInfo.c LinkedList.c
+	gcc -c main.c
+teamInfo.o: teamInfo.c
+	gcc -c teamInfo.c
+LinkedList.o: LinkedList.c teamInfo.c
+	gcc -c LinkedList.c
+
