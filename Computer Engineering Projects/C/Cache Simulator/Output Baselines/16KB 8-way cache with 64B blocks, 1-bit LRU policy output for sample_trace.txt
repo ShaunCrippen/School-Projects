@@ -1,0 +1,17 @@
+CACHE PARAMETERS
+Number of sets: 32
+Associativity: 8
+Cache line size: 64
+Replacement policy: 1-bit LRU
+
+CACHE STATISTICS
+Total number of cache accesses: 512
+Number of cache reads: 256
+Number of cache writes: 256
+Number of invalidates: 0
+Number of cache hits: 96
+Number of cache misses: 416
+Cache hit ratio: 18.75%
+Cache miss ratio: 81.25%
+Number of evictions: 192
+Number of writebacks: 32
