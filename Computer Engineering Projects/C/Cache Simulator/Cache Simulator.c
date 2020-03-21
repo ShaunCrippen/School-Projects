@@ -1,11 +1,25 @@
 /*
-Shaun Crippen
+Shaun Crippen & Michael Zarubin
 ECE 585 winter 2020
 Cache Simulator
 
 Program Description:
 --------------------
-Simulates a single-level writeback cache using either true LRU or 1-bit LRU replacement policies.
+Program simulates a single-level, write-back cache using either true LRU or 1-bit LRU replacement policies.
+Input:  trace file (.txt file format), and cache parameters (number of sets, associativity, line size, and replacement policy).
+Output: Various cache statistics to STDOUT.
+
+Trace files should be made up of address traces only and be in the following format:
+
+access_type hex_address
+          X XXXXXXXX
+
+access_type: One character and can be a 0,1, or 2 for read, write, or invalidate respectively.
+hex_address: Eight hex bits for requested byte from memory.
+             Note that there is one whitespace between access type and the hex address.
+
+NOTE:
+Program does not implement any form of error checking and assumes user provides expected traces and cache options.
 */
 
 #include <stdlib.h>
