@@ -1,0 +1,182 @@
+@ User LED & Button Interrupt Program
+@ When the output from a debounced switch connected to GPIO2_22 goes low,
+@ this program produces an IRQ iterrupt to the processor. The IRW service 
+@ procedure for this request will light the user LEDs (GPIO1_21-24) one 
+@ at a time in consecutive order for 1 second each on the first and 
+@ consecutive odd button press. Second and consecutive even button press
+@ will turn the LED cycle off.
+@ NOTE: Program uses modified Startup_ARMCA8 file to access IRQ interrupt
+@ service procedure INT_DIRECTOR.
+@ Shaun E Crippen, March 14 2019
+
+.text
+.global _start
+.global INT_DIRECTOR
+_start:
+
+@ Declaring register addresses and user LED bitmaps simplify code
+	.equ	CM_PER_GPIO1_CLKCTRL, 0x44E000AC
+	.equ	GPIO1_CLEARDATAOUT, 0x4804C190
+	.equ	GPIO1_OE, 0x4804C134
+	.equ	GPIO1_SETDATAOUT, 0x4804C194
+	.equ	LED0, 0x00200000			@ Bitmap for user LED0, GPIO1_21
+	.equ	LED1, 0x00400000			@ Bitmap for user LED1, GPIO1_22
+	.equ	LED2, 0x00800000			@ Bitmap for user LED2, GPIO1_23
+	.equ	LED3, 0x01000000			@ Bitmap for user LED3, GPIO1_24
+	.equ	CM_PER_GPIO2_CLKCTRL, 0x44E000B0
+	.equ	GPIO2_FALLINGDETECT, 0x481AC14C
+	.equ	GPIO2_IRQSTATUS_SET_0, 0x481AC034
+	.equ	INTC_MIR_CLEAR1, 0x482000A8
+	.equ	INTC_PENDING_IRQ1, 0x482000B8
+	.equ	GPIO2_IRQSTATUS_0, 0x481AC02C
+	.equ	INTC_CONTROL, 0x48200048
+
+@ Load pointers
+		LDR R13, =SVC_STACK		@ Load SVC mode stack pointer
+		ADD R13, R13, #0x1000		@ Point SVC stack pointer to top of stack (FD)
+		LDR R4, =LED_STATUS		@ load pointer for LED cycle ON/OFF pointer
+		CPS #0x12			@ Switch to IRQ mode
+		LDR R13, =IRQ_STACK		@ Load IRQ mode stack pointer
+		ADD R13, R13, #0x1000		@ Point IRQ stack pointer to top of stack (FD)
+		CPS #0x13			@ Switch back to SVC mode
+
+@ Enable GPIO1 and GPIO2 module clocks
+		MOV R0, #0x02			@ Value to enable GPIO module clocks
+		LDR R1, =CM_PER_GPIO1_CLKCTRL	@ Load GPIO1 module clock enable register
+		STR R0, [R1]			@ Write #2 to enable GPIO1 module clock
+		LDR R1, =CM_PER_GPIO2_CLKCTRL	@ Load GPIO2 module clock enable register
+		STR R0, [R1]			@ Enable GPIO2 module clock
+
+		LDR R0, =GPIO1_CLEARDATAOUT	@ Address of GPIO1_CLEARDATAOUT register
+		MOV R1, #0x01E00000		@ Word to clear user LEDs (GPIO1_21-24)
+		STR R1, [R0]			@ Write clear data word to GPIO1_CLEARDATAOUT register
+
+@ Enable LEDs as outputs			
+		LDR R0, =GPIO1_OE		@ GPIO1_OE register address
+		LDR R1, [R0]			@ Read current GPIO1_OE register
+		MOV R2, #0xFE1FFFFF		@ Word to enable user LEDs (GPIO1_21-24) as outputs
+		AND R1, R2, R1			@ Modify GPIO1_OE register by clearing bits 21-24
+		STR R1, [R0]			@ Write back to GPIO1_OE register
+
+@ Enable FALLINGDETECT for button
+		LDR R0, =GPIO2_FALLINGDETECT		
+		LDR R1, [R0]			@ Read word from FALLINGDETECT register
+		MOV R2, #0x00400000		@ Word to enable FALLINGDETECT @ INT source on bit 22
+		ORR R1, R2, R1			@ Set bit 22 to 1 to enable FALLINGDETECT without affecting other bits
+		STR R1, [R0]			@ Store to enable IRQ on falling edge of button press
+			
+@ Enable button as interrupt
+		LDR R0, =GPIO2_IRQSTATUS_SET_0	@ Load word from IRQ status register
+		STR R2, [R0]			@ enable button as interrupt source
+			
+@ INTC initialization
+		LDR R0, =INTC_MIR_CLEAR1	@ Address of INTC_MIR_CLEAR1 register		
+		MOV R1, #0x01			@ Value to unmask INTC INT 32
+		STR R1, [R0]			@ Unmask INT #32 to allow INTC to generate IRQ from button
+			
+@ Enable IRQ
+		MRS R3, CPSR			@ Copy CPSR to R3
+		BIC R3, #0x80			@ enable IRQs by clearing bit 7
+		MSR CPSR_c, R3			@ Write back to CPSR to
+
+@ OFF loop
+	WAIT:	
+		LDR R0, [R4]			@ Load LED_STATUS
+		TST R0, #0x00000001		@ Check bit 0 (1=ON, 0=OFF)
+		BNE LED_CYCLE			@ If LED cycle is on, turn on LED_CYCLE
+		B WAIT
+
+@ LED cycle loop
+	LED_CYCLE:					
+		@ Register initializations
+		MOV R3, #LED0			@ R3 = LED0 ON bit map
+		MOV R8, #LED2			@ R8 = LED2 ON bit map
+		LDR R5, =GPIO1_CLEARDATAOUT	@ Load register address to turn off user LEDs
+		LDR R0, =GPIO1_SETDATAOUT	@ Load register address to turn on user LEDs
+			
+	LEDLOOP:	
+		LDR R1, [R0]			@ Read word from GPIO1_SETDATAOUT
+		MOV R2, #0x01E00000		@ Load mask
+		AND R1, R2, R1			@ Mask all bits but LED pins
+		CMP R1, R3			@ Compare GPIO1_SETDATAOUT to LED0 on
+		BEQ LED1_ON			@ LED0 is on so turn on LED1
+		BMI LED0_ON			@ All LEDs off so turn on LED0
+		CMP R1, R8			@ Compare GPIO1_SETDATAOUT to LED2 on
+		BMI LED2_ON			@ LED1 on so turn on LED2
+		BEQ LED3_ON			@ LED2 on so turn on LED3	
+		B LED0_ON			@ LED3 on so turn on LED0
+			
+	LED0_ON:MOV R7, #LED0			@ Load LED0 value
+		B SEND
+	LED1_ON:MOV R7, #LED1			@ Load LED1 value
+		B SEND
+	LED2_ON:MOV R7, #LED2			@ Load LED2 value
+		B SEND
+	LED3_ON:MOV R7, #LED3			@ Load LED3 value
+		B SEND
+	   SEND:MOV R6, #0x01E00000		@ Load word to turn off LEDs
+	   	STR R6, [R5]			@ Turn off LEDs
+	   	STR R7, [R0]			@ Turn on next LED in sequence
+
+@ 1 second delay			
+		MOV R2, #0x00200000		@ setting delay to 1 second
+	DELAY:	SUBS R2, #1			@ subtract 1 from 0x200000 for 1 second
+		BNE DELAY			@ Repeat subtraction until zero flag set
+
+@ Checking if LED_STATUS is ON/OFF			
+		LDR R9, [R4]			@ Load LED_STATUS
+		TST R9, #0x00000001		@ Test bit 0
+		BEQ WAIT			@ If LED_STATUS if OFF (bit=0), go to the wait loop
+
+		B LEDLOOP			@ Turn on next LED in sequence
+
+	INT_DIRECTOR:
+		STMFD SP!, {R0-R9, LR}		@ Push SVC registers to IRQ stack
+		LDR R0, =INTC_PENDING_IRQ1
+		LDR R1, [R0]			@ Load word to see if IRQ is GPIOINT2A signal
+		TST R1, #0x00000001		@ Check INT #32 if interrupt came from GPIOINT2A 
+		BEQ RETURN			@ If not, exit IRQ mode
+		LDR R0, =GPIO2_IRQSTATUS_0
+		LDR R1, [R0]			@ Load word to check if button caused IRQ
+		TST R1, #0x00400000		@ Check bit 22 if interrupt came from button
+		BNE BUTTON_SVC			@ If yes go to button service
+		BEQ RETURN			@ If no, exit IRQ mode
+
+	RETURN:
+		LDR R0, =INTC_CONTROL
+		MOV R1, #1
+		STR R1, [R0]			@ Turn off NEWIRQ bit
+		LDMFD SP!, {R0-R9, LR}		@ Pop SVC registers
+		SUBS PC, LR, #4			@ Return to mainline
+			
+	BUTTON_SVC:
+		MOV R1, #0x00400000		@ Turns off GPIO2_22 and INTC IRQ
+		STR R1, [R0]
+			
+@ Test if LED_STATUS is 1 [ON] or [OFF]
+		LDR R0, [R4]			@ Load word from LED_STATUS
+		TST R0, #0x00000001		@ Check bit 0
+		MOVEQ R0, #0x1			@ if bit=0 (LED cycle OFF), add 1 so LED can be turned ON
+		BEQ BACK			@ Return to mainline
+		LDR R0, =GPIO1_CLEARDATAOUT		
+		MOV R1, #0x01E00000				
+		STR R1, [R0]			@ Clear LEDs to turn off LED_CYCLE
+		MOV R0, #0x0			@ if bit=1 (LED cycle ON), minus 1 so LED can be turned OFF
+			
+	BACK:	STR R0, [R4]			@ Write new LED status to LED_STATUS
+		B RETURN			@ Exit IRQ mode
+			
+.align 4
+SYS_IRQ: .word 0				@ Location to store system's IRQ address
+.data
+.align 4
+SVC_STACK:	.rept 1024
+		.word 0x0
+		.endr
+IRQ_STACK:	.rept 1024
+		.word 0x0
+		.endr
+LED_STATUS:	.word 0x0
+		
+		NOP	
+.end
