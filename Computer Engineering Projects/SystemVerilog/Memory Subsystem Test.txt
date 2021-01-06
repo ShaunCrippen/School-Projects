@@ -1,0 +1,32 @@
+run -all
+# 6: Started memory write operation to valid page
+# 16: wrote 0001 to address 0xFFE
+# 26: wrote 0002 to address 0xFFF
+# 36: wrote 0003 to address 0x000
+# 46: wrote 0004 to address 0x001
+# Finished write operation to valid page
+# 
+# 56: Started memory read operation from valid page
+# 66: Address: 0xFFE	Memory had: 0001	Expected: 0x0001
+# 76: Address: 0xFFF	Memory had: 0002	Expected: 0x0002
+# 86: Address: 0x000	Memory had: 0003	Expected: 0x0003
+# 96: Address: 0x001	Memory had: 0004	Expected: 0x0004
+# Finished memory read operation from valid page. Memory data should match expected values.
+# 
+# 106: Started memory write operation to invalid page.  Data should NOT be written
+# 116: attempted to write 0001 to address 0xF00
+# 126: attempted to write 0002 to address 0xF01
+# 136: attempted to write 0003 to address 0xF02
+# 146: attempted to write 0004 to address 0xF03
+# Finished write operation to invalid page.  Should not have modified memory addresses 0x2F00 - 0x2F03
+# 
+# 156: Started memory read operation from valid page to confirm there was no data written from attempted write to invalid page
+# 166: Address: 0xF00	Memory had: 0000	Expected: 0x0000
+# 176: Address: 0xF01	Memory had: 0000	Expected: 0x0000
+# 186: Address: 0xF02	Memory had: 0000	Expected: 0x0000
+# 196: Address: 0xF03	Memory had: 0000	Expected: 0x0000
+# Finished memory read operation from valid page.  Memory data should match expected values.
+# 
+# ** Note: $stop    : F:/memory_tb.sv(53)
+#    Time: 250 ns  Iteration: 0  Instance: /memory_tb
+# Break in Module memory_tb at F:/memory_tb.sv line 53
